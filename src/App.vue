@@ -1,24 +1,20 @@
 <template>
-  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+  <TopNav/>
   <input type="text" v-model="mytodo.text" />
+  <input type="date" v-model="mytodo.date">
   <button @click="AddTodo">Add Todo</button>
   <div v-if="!isEmpty">
-    <p v-for="todo in todos" :key="todo.id">
-      {{ todo.id }}. {{ todo }} <button @click="removeTodo(todo.id)">delete</button>
+    <p v-for="(todo, index) in todos" :key="index">
+      {{ index }}. {{ todo }} <button @click="removeTodo(index)">delete</button>
     </p>
   </div>
   <div v-else>No todos found</div>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
 </template>
 
 <script>
 import { computed, ref } from "vue";
 import { useMainStore } from "./store/store";
+import TopNav from '../src/components/TopNav.vue'
 export default {
   name: 'App',
   setup() {
@@ -26,13 +22,7 @@ export default {
     let todos = computed(() => main.getAllTodos)
     const mytodo = ref({});
     const AddTodo = () => {
-      if (mytodo.value != "") {
-        console.log(todos.value[0])
-        if(todos.value[0] == undefined){
-          mytodo.value.id = 0
-        }else{
-          mytodo.value.id = todos.value.at(-1).id +1
-        }
+      if (typeof mytodo.value.text !== 'undefined') {
         main.addTodo(mytodo.value);
         mytodo.value = {};
       }
@@ -44,10 +34,12 @@ export default {
       isEmpty: computed(() => main.todoEmpty),
       removeTodo: main.removeTodo,
     };
-  }
+  }, 
+  components:{
+    TopNav
+  },
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

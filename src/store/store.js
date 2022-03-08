@@ -11,7 +11,7 @@ export const useMainStore = defineStore({
         },
         todoEmpty() {
             return this.todos.length <= 0
-        }
+        },
     },
     actions: {
         addTodo(todo) {
