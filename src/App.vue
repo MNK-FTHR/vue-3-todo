@@ -6,8 +6,9 @@
 </script>
 
 <template>
-<div class="container-fluid py-2 text-light bg-dark">
-  <div class="row align-items-center text-center">
+<div class="container-fluid py-2 text-light bg-dark" style="min-height: 100%;
+    height: 100%;">
+  <div class="row align-items-center text-center mx-4">
     <div :class="!swap?'col bg-secondary':'col'" @click="swap = false">
       Todos
     </div>
@@ -30,7 +31,5 @@
 </template>
 
 <style>
-.dark{
-  background-color: black;
-}
+
 </style>
