@@ -31,5 +31,7 @@
 </template>
 
 <style>
-
+.cursor-pointer {
+   cursor: pointer;
+}
 </style>

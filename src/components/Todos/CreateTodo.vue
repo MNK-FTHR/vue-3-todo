@@ -6,12 +6,12 @@ import { computed } from "@vue/runtime-core";
 
 const mytodo = ref({});
 let create = ref(false);
-
-let categories = computed(() => categoryStore.getAllategories)
-let isEmpty = computed(() => todoStore.todoEmpty);
-
 const categoryStore = useCategoriesStore();
 const todoStore = useTodosStore();
+
+let categories = computed(() => categoryStore.getAllCategories)
+let isEmpty = computed(() => todoStore.todoEmpty);
+
 const AddTodo = () => {
   if (mytodo.value != {}) {
     mytodo.value.done = false;

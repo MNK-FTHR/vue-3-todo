@@ -6,11 +6,18 @@ export const useCategoriesStore = defineStore({
     categories: ['Categorie 1', 'Categorie 2', 'Categorie 3']
   }),
   getters: {
-    getAllategories() {
+    getAllCategories() {
       return this.categories
     },
-    ategoriesEmpty() {
+    CategoriesEmpty() {
         return this.categories.length <= 0;
+    },
+    countNumberOfTodoByCategory(todos) {
+      for (let index = 0; index < this.categories.length; index++) {
+        todos.filter(todo => todo.category == this.categories[index]);
+        
+      }
+      return 
     }
   },
   actions: {
