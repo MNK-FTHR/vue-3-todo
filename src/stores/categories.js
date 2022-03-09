@@ -13,11 +13,13 @@ export const useCategoriesStore = defineStore({
         return this.categories.length <= 0;
     },
     countNumberOfTodoByCategory(todos) {
+      let jsp = []
       for (let index = 0; index < this.categories.length; index++) {
-        todos.filter(todo => todo.category == this.categories[index]);
         
+         jsp[index] = todos.filter(todo => todo.category == this.categories[index]);
+         console.log(jsp);
       }
-      return 
+      return jsp
     }
   },
   actions: {

@@ -1,9 +1,22 @@
 <script setup>
-import { computed } from "@vue/runtime-core";
+import { computed, ref } from "@vue/runtime-core";
 import { useCategoriesStore } from "../../stores/categories";
-const categoryStore = useCategoriesStore();
+import { useTodosStore } from "../../stores/todos";
 
-let categories = computed(() => categoryStore.getAllategories)
+const categoryStore = useCategoriesStore();
+const todoStore = useTodosStore();
+let todos = computed(() => todoStore.getAllTodos);
+let categories = computed(() => categoryStore.getAllCategories)
+console.log(todos.value.filter(todo => todo.category == "Categorie 2").length);
+let already = ref(todos.value.filter(todo => todo.category == "Categorie 2").length)
+// let calculate = computed(()=>{
+//   let xd = []
+//   for (let index = 0; index < categories.length; index++) {
+//     xd.push(todos.value.filter(todo => todo.category == this.categories[index]))
+//     return xd
+//   }
+// })
+let countNumberOfTodoByCategory = computed(()=> categoryStore.countNumberOfTodoByCategory(todos.value))
 </script>
 
 <template>
@@ -11,7 +24,6 @@ let categories = computed(() => categoryStore.getAllategories)
     <div class="container">
       <div class="row">
         <div class="col-6">
-
         </div>
         <div class="col-6">
           <ol class="list-group">
@@ -19,7 +31,7 @@ let categories = computed(() => categoryStore.getAllategories)
               <div class="ms-2 me-auto">
                 <div class="fw-bold">{{category}}</div>
               </div>
-              <span class="badge bg-primary rounded-pill">14</span>
+              <span class="badge bg-primary rounded-pill">already</span>
             </li>
           </ol>
         </div>
