@@ -12,21 +12,12 @@ export const useCategoriesStore = defineStore({
     CategoriesEmpty() {
         return this.categories.length <= 0;
     },
-    countNumberOfTodoByCategory(todos) {
-      let jsp = []
-      for (let index = 0; index < this.categories.length; index++) {
-        
-         jsp[index] = todos.filter(todo => todo.category == this.categories[index]);
-         console.log(jsp);
-      }
-      return jsp
-    }
   },
   actions: {
-    addategories(categorie) {
+    addCategories(categorie) {
       this.categories.push(categorie);
     },
-    removeategories(index) {
+    removeCategories(index) {
         this.categories.splice(index, 1)
     }
   }
