@@ -10,15 +10,18 @@ export const useCategoriesStore = defineStore({
       return this.categories
     },
     CategoriesEmpty() {
-        return this.categories.length <= 0;
+      return this.categories.length <= 0;
     },
   },
   actions: {
+    editCategory(index, newValue){
+      this.categories[index] = newValue;
+    },
     addCategories(categorie) {
       this.categories.push(categorie);
     },
     removeCategories(index) {
         this.categories.splice(index, 1)
-    }
+    },
   }
 })

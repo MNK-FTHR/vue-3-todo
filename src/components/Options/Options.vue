@@ -12,10 +12,19 @@ let categories = computed(() => categoryStore.getAllCategories);
 let countNumberOfTodoByCategory = computed(()=> todoStore.countNumberOfTodoByCategory);
 
 let newCategory = ref('');
+function del(index) {
+  categoryStore.removeCategories(index);
+}
 const addCategory = () =>{
   categoryStore.addCategories(newCategory.value)
 }
-let updateCategory = ref('')
+let updatedCategory = ref('')
+
+function update (index){
+  categoryStore.editCategory(edit, updatedCategory.value);
+  edit.value = null
+  console.log(categoryStore.getAllCategories);
+}
 </script>
 
 <template>
@@ -29,11 +38,11 @@ let updateCategory = ref('')
             <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(category, index) in categories" :key="index">
               <div class="ms-2 me-auto">
                 <div class="fw-bold" v-if="edit != index">{{category}}</div>
-                <input type="text" name="" id="" placeholder="Ajoutez une catégorie" v-model="updateCategory" class="m-4" v-if="edit == index">
-                <button class="btn btn-outline-secondary btn-sm mb-1" v-if="edit == index">Valider</button>
+                <input type="text" name="" id="" placeholder="Ajoutez une catégorie" v-model="updatedCategory" class="m-4" v-if="edit == index">
+                <button class="btn btn-outline-secondary btn-sm mb-1" v-if="edit == index" @click="update(index)">Valider</button>
               </div>
-              <BIconPencilSquare class="cursor-pointer text-info mx-2 h6" @click="edit = index; updateCategory=category " v-if="edit != index"/>
-              <BIconTrash class="cursor-pointer text-danger mx-2 h6" v-if="edit != index"/>
+              <BIconPencilSquare class="cursor-pointer text-info mx-2 h6" @click="edit = index; updatedCategory=category " v-if="edit != index"/>
+              <BIconTrash class="cursor-pointer text-danger mx-2 h6" v-if="edit != index" @click="del(index)"/>
               <span class="badge bg-primary rounded-pill" v-if="edit != index">{{countNumberOfTodoByCategory[index]}}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start">
