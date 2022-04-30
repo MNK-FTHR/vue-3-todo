@@ -3,28 +3,18 @@ import { useTodosStore } from "../../stores/todos";
 import { useCategoriesStore } from "../../stores/categories";
 import { ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
-
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 const mytodo = ref({});
 let create = ref(false);
 const categoryStore = useCategoriesStore();
 const todoStore = useTodosStore();
-
 let categories = computed(() => categoryStore.getAllCategories)
 let isEmpty = computed(() => todoStore.todoEmpty);
 
 const AddTodo = () => {
   if (mytodo.value != {}) {
-    mytodo.value.done = false;
-    mytodo.value.date_create =
-      new Date().getFullYear() +
-      "-" +
-      (new Date().getMonth() + 1 < 10
-        ? "0" + (new Date().getMonth() + 1)
-        : new Date().getMonth()) +
-      "-" +
-      (new Date().getDate() < 10
-        ? "0" + new Date().getDate()
-        : new Date().getDate());    
+    mytodo.value.done = false;          
     todoStore.addTodo(mytodo.value);
     mytodo.value = {};
     create.value = false;
@@ -71,25 +61,25 @@ const AddTodo = () => {
         </div>
 
         <div class="col">
-          <h5 class="card-title">Date</h5>
-          <input
-            type="date"
-            :min="
-              new Date().getFullYear() +
-              '-' +
-              (new Date().getMonth() + 1 < 10
-                ? '0' + (new Date().getMonth() + 1)
-                : new Date().getMonth()) +
-              '-' +
-              (new Date().getDate() < 10
-                ? '0' + new Date().getDate()
-                : new Date().getDate())
-            "
-            v-model="mytodo.date"
-          />
+          <h5>Example range</h5>
+          <input type="range" class="form-range" id="customRange1">
+        </div>
+        <div class="col-12 my-4 py-4" style="border: 1px solid #2b3137;">
+            <h5 class="card-title">Date</h5>
+            <div class="row">
+              <div class="col-6">
+                <h6>Date</h6>
+                <Datepicker locale="fr" v-model="mytodo.date" />
+              </div>
+              <div class="col-6">
+                <h6>Période</h6>
+                <Datepicker locale="fr" range multiCalendars v-model="mytodo.range" />
+              </div>
+            </div>
         </div>
         <div class="col-12 my-4 py-4">
-            <h5 class="card-title">Description</h5>
+            <h5 class="card-title">Description
+            </h5>
             <textarea class="form-control" aria-label="With textarea" v-model="mytodo.description"></textarea>
         </div>
       </div>
@@ -102,7 +92,7 @@ const AddTodo = () => {
         type="button"
         class="btn btn-success"
         @click="AddTodo"
-        v-if="Object.keys(mytodo).length == 4"
+        v-if="Object.keys(mytodo).length >= 4"
       >
         Add Todo
       </button>
@@ -111,4 +101,7 @@ const AddTodo = () => {
 </template>
 
 <style>
+.div{
+  color: #2b3137;
+}
 </style>

@@ -9,10 +9,10 @@
 <div class="container-fluid py-2 text-light bg-dark" style="min-height: 100%;
     height: 100%;">
   <div class="row align-items-center text-center mx-4">
-    <div :class="!swap?'col bg-secondary':'col'" @click="swap = false">
+    <div :class="!swap?'col bg-secondary border border-secondary':'col  border border-secondary'" @click="swap = false">
       Todos
-    </div>
-    <div :class="swap?'col bg-secondary':'col'" @click="swap = true">
+    </div> 
+    <div :class="swap?'col bg-secondary border border-secondary':'col  border border-secondary'" @click="swap = true">
       Options
     </div>
   </div>

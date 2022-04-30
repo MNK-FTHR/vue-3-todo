@@ -7,7 +7,7 @@ const todoStore = useTodosStore();
 let todos = computed(() => todoStore.getAllTodos);
 let removeTodo = todoStore.removeTodo;
 let isEmpty = computed(() => todoStore.todoEmpty);
-
+console.log(todos.value);
 </script>
 
 <template>

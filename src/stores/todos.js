@@ -30,6 +30,9 @@ export const useTodosStore = defineStore({
     addTodo(todo) {
       this.todos.push(todo);
     },
+    checkTodo(index) {
+      this.todos[index].done == true ? this.todos[index].done = false : this.todos[index].done = true;
+    },
     removeTodo(index) {
         this.todos.splice(index, 1)
     }
