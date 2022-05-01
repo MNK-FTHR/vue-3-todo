@@ -8,7 +8,15 @@ export const useTodosStore = defineStore({
   }),
   getters: {
     getAllTodos() {
-      return this.todos
+      let sortedTodos = {
+        "todos": this.todos
+      }
+      const categoryStore = useCategoriesStore();
+      let categories = categoryStore.getAllCategories;
+      categories.forEach(category => {
+        sortedTodos[category.name] = this.todos.filter((todo)=>todo.category.name==category.name)
+      });
+      return sortedTodos
     },
     todoEmpty() {
         return this.todos.length <= 0;
@@ -33,8 +41,11 @@ export const useTodosStore = defineStore({
     checkTodo(index) {
       this.todos[index].done == true ? this.todos[index].done = false : this.todos[index].done = true;
     },
+    updateTodo(index, todo) {
+        this.todos[index]=todo
+    },
     removeTodo(index) {
-        this.todos.splice(index, 1)
-    }
+      this.todos.splice(index, 1)
+  }
   }
 })

@@ -22,11 +22,6 @@
       <Options v-if="swap"/>
     </div>
   </div>
-  <div class="row align-items-center text-center">
-    <div class="col py-4 my-4">
-      Calendar
-    </div>
-  </div>
 </div>
 </template>
 

@@ -11,15 +11,20 @@ const categoryStore = useCategoriesStore();
 const todoStore = useTodosStore();
 let categories = computed(() => categoryStore.getAllCategories)
 let isEmpty = computed(() => todoStore.todoEmpty);
+let importance = ref(0);
 
 const AddTodo = () => {
   if (mytodo.value != {}) {
-    mytodo.value.done = false;          
+    mytodo.value.done = false;
+    mytodo.value.importance = importance.value;
     todoStore.addTodo(mytodo.value);
     mytodo.value = {};
     create.value = false;
   }
 };
+
+let lockDate = ref(false);
+let lockRange = ref(true);
 </script>
 
 <template>
@@ -32,11 +37,12 @@ const AddTodo = () => {
     Créer une tâche
   </button>
   <div
-    class="card text-center border-secondary bg-dark mx-4"
+    class="card text-center bg-dark mx-4"
+    :style="`border: 5px solid rgb(${211}, ${211-25*importance/1.5}, ${211-25*importance/1.5})`"
     v-if="create == true"
   >
     <div class="card-header">Création d'une tâche</div>
-    <div class="card-body">
+    <div class="card-body bg-dark" >
       <div class="row">
         <div class="col">
           <h5 class="card-title">Titre</h5>
@@ -54,26 +60,25 @@ const AddTodo = () => {
                 :key="index"
                 :value="category"
                 >
-                {{ category }}
+                {{ category.name }}
                 </option>
             </select>
           </div>
         </div>
-
         <div class="col">
-          <h5>Example range</h5>
-          <input type="range" class="form-range" id="customRange1">
+          <h5>Importance: {{importance}}</h5>
+          <input type="range" class="form-range" min="0" max="10" step="1" v-model="importance">
         </div>
         <div class="col-12 my-4 py-4" style="border: 1px solid #2b3137;">
             <h5 class="card-title">Date</h5>
             <div class="row">
-              <div class="col-6">
+              <div class="col-6 pb-4" :style="lockDate? 'background-color: #556472; cursor: not-allowed;' : ''" @click="lockRange = true; lockDate = false; mytodo.range = null;">
                 <h6>Date</h6>
-                <Datepicker locale="fr" v-model="mytodo.date" />
+                <Datepicker locale="fr" v-model="mytodo.date" :disabled="lockDate" />
               </div>
-              <div class="col-6">
+              <div class="col-6 pb-4" :style="lockRange? 'background-color: #556472; cursor: not-allowed;' : ''" @click="lockDate = true; lockRange = false; mytodo.date = null;">
                 <h6>Période</h6>
-                <Datepicker locale="fr" range multiCalendars v-model="mytodo.range" />
+                <Datepicker locale="fr" range multiCalendars v-model="mytodo.range" :disabled="lockRange" />
               </div>
             </div>
         </div>
@@ -102,6 +107,10 @@ const AddTodo = () => {
 
 <style>
 .div{
-  color: #2b3137;
+  color: rgb(195, 6, 34);
+  color: rgb(77, 17, 17);
+  color: rgb(71, 71, 71);
+  color: rgb(211, 211, 211);
+  color: #212529;
 }
 </style>
